@@ -1,11 +1,12 @@
 from typing import Union
 from fastapi import FastAPI
 
+# fastapi dev main.py
 app = FastAPI()
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"Fast Api is Running"}
 
 
 @app.get("/items/{item_id}")
