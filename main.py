@@ -17,7 +17,7 @@ movies = [
         "overview": "Space",
         "year": "2014",
         "rating": 9.3,
-        "category": "Action",
+        "category": "Ficcion",
     },
     {
         "id": 3,
@@ -54,8 +54,9 @@ def getMovieById(id: int):
 # Query Params
 @app.get("/movies/", tags=["movies"])
 def getMoviesByCategory(category: str, year: int):
-    category = [movie for movie in movies if movie["category"] == category and movie["year"] == year]
-    return category
+    # Need to be fixed YEAR var isnt working
+    filtered_movies = [movie for movie in movies if movie["category"] == category and movie["year"] == year]
+    return filtered_movies
 
 
 # Delete
