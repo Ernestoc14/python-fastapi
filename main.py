@@ -55,11 +55,11 @@ def getMovieById(id: int):
 @app.get("/movies/", tags=["movies"])
 def getMoviesByCategory(category: str, year: int):
     # Need to be fixed YEAR var isnt working
-    filtered_movies = [movie for movie in movies if movie["category"] == category and movie["year"] == year]
+    filtered_movies = [movie for movie in movies if movie["category"] == category or movie["year"] == year]
     return filtered_movies
 
 
 # Delete
-# @app.delete("/movies/{id}", tags=["movies"])
-# def deleteMovieById(id : int):
-#     return
+@app.delete("/movies/{id}", tags=["movies"])
+def deleteMovieById(id : int):
+    return
