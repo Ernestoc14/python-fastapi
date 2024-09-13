@@ -59,6 +59,11 @@ def getMoviesByCategory(category: str, year: int):
     return filtered_movies
 
 
+# Create movie
+@app.post("/movies", tags=["movies"])
+def createMovie(id: int, title: str, review: str, year: int, category:str, rating: float):
+    return title
+
 # Delete
 @app.delete("/movies/{id}", tags=["movies"])
 def deleteMovieById(id : int):
