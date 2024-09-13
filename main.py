@@ -1,5 +1,5 @@
 from typing import Union
-from fastapi import FastAPI
+from fastapi import FastAPI, Body
 from fastapi.responses import HTMLResponse
 
 movies = [
@@ -7,7 +7,7 @@ movies = [
         "id": 1,
         "title": "Avatar",
         "overview": "En un exuberante planeta llamado Pandora viven los Na'vi, seres que...",
-        "year": "2009",
+        "year": 2009,
         "rating": 7.8,
         "category": "Action",
     },
@@ -15,7 +15,7 @@ movies = [
         "id": 2,
         "title": "Interestellar",
         "overview": "Space",
-        "year": "2014",
+        "year": 2014,
         "rating": 9.3,
         "category": "Ficcion",
     },
@@ -23,7 +23,7 @@ movies = [
         "id": 3,
         "title": "Garfield",
         "overview": "Cat movie",
-        "year": "2023",
+        "year": 2023,
         "rating": 8.2,
         "category": "Comic",
     },
@@ -55,16 +55,31 @@ def getMovieById(id: int):
 @app.get("/movies/", tags=["movies"])
 def getMoviesByCategory(category: str, year: int):
     # Need to be fixed YEAR var isnt working
-    filtered_movies = [movie for movie in movies if movie["category"] == category or movie["year"] == year]
+    filtered_movies = [
+        movie
+        for movie in movies
+        if movie["category"] == category or movie["year"] == year
+    ]
     return filtered_movies
 
 
 # Create movie
 @app.post("/movies", tags=["movies"])
-def createMovie(id: int, title: str, review: str, year: int, category:str, rating: float):
-    return title
+def createMovie(
+    id: int = Body(),
+    title: str = Body(),
+    review: str = Body(),
+    year: int = Body(),
+    category: str = Body(),
+    rating: float = Body(),
+):
+    movies.append(
+        {"id": id, "title": title, "review": review, "year": year, "category": category, "rating": rating}
+    )
+    return movies
+
 
 # Delete
 @app.delete("/movies/{id}", tags=["movies"])
-def deleteMovieById(id : int):
+def deleteMovieById(id: int):
     return
