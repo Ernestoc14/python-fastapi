@@ -58,7 +58,7 @@ def getMoviesByCategory(category: str, year: int):
     filtered_movies = [
         movie
         for movie in movies
-        if movie["category"] == category or movie["year"] == year
+        if movie["category"] == category and movie["year"] == year
     ]
     return filtered_movies
 
@@ -74,12 +74,39 @@ def createMovie(
     rating: float = Body(),
 ):
     movies.append(
-        {"id": id, "title": title, "review": review, "year": year, "category": category, "rating": rating}
+        {
+            "id": id,
+            "title": title,
+            "review": review,
+            "year": year,
+            "category": category,
+            "rating": rating,
+        }
     )
     return movies
 
 
-# Delete
+# Update by ID
+@app.put("/movies/{id}", tags=["movies"])
+def updateMovieById(
+    id: int,
+    title: str = Body(),
+    review: str = Body(),
+    year: int = Body(),
+    category: str = Body(),
+    rating: float = Body(),
+):
+    for item in movies:
+        if item["id"] == id:
+            item["title"] = title
+            item["review"] = review
+            item["year"] = year
+            item["category"] = category
+            item["rating"] = rating
+    return movies
+
+
+# Delete by ID
 @app.delete("/movies/{id}", tags=["movies"])
 def deleteMovieById(id: int):
     return
