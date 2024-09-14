@@ -109,4 +109,7 @@ def updateMovieById(
 # Delete by ID
 @app.delete("/movies/{id}", tags=["movies"])
 def deleteMovieById(id: int):
-    return
+    for movie in movies:
+        if movie["id"] == id:
+            movies.remove(movie)
+    return movies
