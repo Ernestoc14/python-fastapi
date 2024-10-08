@@ -39,7 +39,7 @@ app.title = "Mi primera API con FastAPI"
 class Movie(BaseModel):
     id: Optional[int] = None
     title: str
-    oveerview: str
+    overview: str
     year: int
     rating: float
     category: str
