@@ -1,8 +1,36 @@
 from typing import Union
 from fastapi import FastAPI, Body
 from fastapi.responses import HTMLResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional
+
+# fastapi dev main.py
+app = FastAPI()
+app.title = "Mi primera API con FastAPI"
+
+
+class Movie(BaseModel):
+    id: Optional[int] = None
+    title: str = Field(max_length=15)
+    overview: str = Field(min_length=15, max_length=50)
+    year: int = Field(le=2024)
+    rating: float
+    category: str
+
+    # class Config:
+    model_config = {
+        "json_schema_extra": {
+            "example": {
+                "id": 1,
+                "title": "Titulo de la Pelicula",
+                "overview": "Descripcion de la Pelicula",
+                "year": 2024,
+                "rating": 0.0,
+                "category": "Categoria",
+            }
+        }
+    }
+
 
 movies = [
     {
@@ -30,19 +58,6 @@ movies = [
         "category": "Comic",
     },
 ]
-
-# fastapi dev main.py
-app = FastAPI()
-app.title = "Mi primera API con FastAPI"
-
-
-class Movie(BaseModel):
-    id: Optional[int] = None
-    title: str
-    overview: str
-    year: int
-    rating: float
-    category: str
 
 
 @app.get("/", tags=["home"])
